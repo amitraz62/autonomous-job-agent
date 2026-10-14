@@ -1,0 +1,21 @@
+# Environment and Secrets
+.env
+*.env
+application-local.properties
+
+# Build outputs
+target/
+dist/
+build/
+node_modules/
+
+# OS and IDE files
+.DS_Store
+.idea/
+*.iml
+.vscode/
+
+# Logs & Sessions
+*.log
+session_data/
+*.session
