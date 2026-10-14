@@ -1,9 +1,9 @@
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import dotenv from 'dotenv';
 dotenv.config();
 
 const apiKey = process.env.GEMINI_API_KEY || 'demo_key';
-const ai = new GoogleGenAI({ apiKey });
+const genAI = new GoogleGenerativeAI(apiKey);
 
 /**
  * Layer 4 & Layer 10: Native JS AI Matching & Localization Engine.
@@ -39,15 +39,13 @@ Respond STRICTLY with valid JSON format:
 `;
 
   try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: prompt,
-      config: {
-        responseMimeType: 'application/json'
-      }
+    const model = genAI.getGenerativeModel({
+      model: 'gemini-1.5-flash',
+      generationConfig: { responseMimeType: 'application/json' }
     });
 
-    const parsed = JSON.parse(response.text.trim());
+    const result = await model.generateContent(prompt);
+    const parsed = JSON.parse(result.response.text().trim());
     return parsed;
   } catch (error) {
     console.error('AI Matching evaluation fallback triggered:', error.message);
